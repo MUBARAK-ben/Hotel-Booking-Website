@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cedarwood Suites | Hotel Rooms &amp; Instant Reservations</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <span class="brand-mark">CW</span>
+        <div>
+          <strong>Cedarwood Suites</strong>
+          <small>Wuse II, Abuja</small>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#rooms">Rooms &amp; Suites</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#policies">Policies</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" id="toggleFrontDeskBtn" class="btn btn-outline">Front Desk</button>
+        <button type="button" id="openBookingsBtn" class="btn btn-primary">
+          My Bookings (<span id="bookingCount">0</span>)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- FRONT DESK & HOUSEKEEPING PANEL -->
+  <section id="frontDeskSection" class="frontdesk-section hidden" aria-label="Front desk operations">
+    <div class="container">
+      <div class="fd-header">
+        <div>
+          <h2>Front Desk &amp; Housekeeping Control</h2>
+          <p class="muted-text">Check guests in or out, update room cleaning states, and monitor daily occupancy.</p>
+        </div>
+        <button type="button" id="closeFrontDeskBtn" class="btn btn-outline btn-sm">Back to Guest View</button>
+      </div>
+
+      <!-- Daily Occupancy KPIs -->
+      <div class="fd-kpi-grid">
+        <div class="fd-kpi">
+          <span>Occupancy Rate</span>
+          <strong id="fdOccupancyRate">0%</strong>
+        </div>
+        <div class="fd-kpi">
+          <span>Occupied Units</span>
+          <strong id="fdOccupiedCount">0</strong>
+        </div>
+        <div class="fd-kpi">
+          <span>Vacant &amp; Clean</span>
+          <strong id="fdCleanCount">0</strong>
+        </div>
+        <div class="fd-kpi">
+          <span>Needs Cleaning</span>
+          <strong id="fdDirtyCount">0</strong>
+        </div>
+      </div>
+
+      <div class="fd-grid">
+        <!-- Check-In / Check-Out Queue -->
+        <div class="fd-card">
+          <h3>Guest Check-In &amp; Check-Out</h3>
+          <div id="fdBookingsQueue" class="fd-queue"></div>
+        </div>
+
+        <!-- Room Housekeeping Board -->
+        <div class="fd-card">
+          <h3>Room Units (Click to Cycle Status)</h3>
+          <div id="fdRoomsBoard" class="fd-rooms-grid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero & Live Availability Bar -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <span class="hero-tag">24/7 Power &bull; Complimentary Breakfast &bull; Instant Confirmation</span>
+        <h1>Rest effortlessly. Book directly with zero hidden markups.</h1>
+        <p>Select your check-in and check-out dates to verify real-time room availability and lock in your stay.</p>
+      </div>
+
+      <form id="availabilityForm" class="availability-bar" aria-label="Room availability search">
+        <div class="field">
+          <label for="checkInDate">Check-In Date</label>
+          <input type="date" id="checkInDate" required />
+        </div>
+
+        <div class="field">
+          <label for="checkOutDate">Check-Out Date</label>
+          <input type="date" id="checkOutDate" required />
+        </div>
+
+        <div class="field">
+          <label for="guestsCount">Guests</label>
+          <select id="guestsCount">
+            <option value="1">1 Guest</option>
+            <option value="2" selected>2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="roomCategoryFilter">Room Category</label>
+          <select id="roomCategoryFilter">
+            <option value="all">All Categories</option>
+            <option value="Standard">Standard &amp; Deluxe</option>
+            <option value="Suite">Executive &amp; Diplomat Suites</option>
+            <option value="Family">Family Residence</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-accent">Check Availability</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Rooms Catalog -->
+  <main id="rooms" class="container rooms-section">
+    <div class="section-header">
+      <div>
+        <h2>Available Rooms &amp; Suites</h2>
+        <p id="staySummaryText" class="muted-text">Calculating stay nights...</p>
+      </div>
+      <div id="availabilityBanner" class="avail-pill">Live Inventory Active</div>
+    </div>
+
+    <div id="roomsGrid" class="rooms-grid"></div>
+  </main>
+
+  <!-- Property Highlights & Policies -->
+  <section id="amenities" class="info-band">
+    <div class="container info-grid">
+      <div class="info-card">
+        <h3>Property Highlights</h3>
+        <ul class="clean-list">
+          <li>Uninterrupted solar, inverter &amp; standby generator power</li>
+          <li>High-speed fiber Wi-Fi across rooms, lounge &amp; workspace</li>
+          <li>On-site restaurant, rooftop terrace &amp; airport pickup option</li>
+          <li>24/7 CCTV surveillance and access-controlled corridors</li>
+        </ul>
+      </div>
+
+      <div id="policies" class="info-card">
+        <h3>Check-In &amp; Booking Policies</h3>
+        <ul class="clean-list">
+          <li><strong>Check-In:</strong> From 2:00 PM &bull; <strong>Check-Out:</strong> By 12:00 PM</li>
+          <li><strong>Valid ID:</strong> Government-issued ID required at front desk check-in</li>
+          <li><strong>Cancellation:</strong> Free cancellation up to 24 hours before check-in</li>
+          <li><strong>Extra Bed / Crib:</strong> Available on request in Suites &amp; Family rooms</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Cedarwood Suites. All rights reserved.</p>
+      <p class="muted-text">Front Desk: +234 809 555 0190 &bull; reservations@cedarwoodsuites.ng</p>
+    </div>
+  </footer>
+
+  <!-- Room Details & Reservation Modal -->
+  <div id="roomModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="roomModalTitle">
+    <div class="modal-card">
+      <button type="button" id="closeRoomModalBtn" class="close-icon" aria-label="Close modal">&times;</button>
+      <div id="roomModalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- My Bookings Drawer -->
+  <aside id="bookingsDrawer" class="drawer-backdrop hidden" aria-label="My bookings">
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <h3>My Reservations</h3>
+        <button type="button" id="closeBookingsDrawerBtn" class="close-icon" aria-label="Close bookings">&times;</button>
+      </div>
+      <div id="bookingsList" class="bookings-list"></div>
+    </div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>
